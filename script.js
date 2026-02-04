@@ -54,7 +54,8 @@ function handleAnswer(questionIndex, answer, button) {
 }
 
 async function submitAllAnswers() {
-    const userName = 'Anonymous';
+    const userNameInput = document.getElementById('userName');
+    const userName = userNameInput && userNameInput.value.trim() ? userNameInput.value.trim() : 'Anonymous';
     
     showLoading();
     
