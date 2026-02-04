@@ -20,18 +20,20 @@ npm install
 
 ### 2. Configure Email Notifications (Optional)
 
-To receive email notifications, edit `server.js` and update:
+To receive email notifications, create a `.env` file in the project root:
 
-```javascript
-const EMAIL_CONFIG = {
-    service: 'gmail',
-    auth: {
-        user: 'YOUR_EMAIL@gmail.com',      // Your Gmail address
-        pass: 'YOUR_APP_PASSWORD'           // Gmail App Password
-    }
-};
+```bash
+# Copy the example file
+cp .env.example .env
+```
 
-const NOTIFICATION_EMAIL = 'YOUR_EMAIL@gmail.com';  // Where to receive notifications
+Then edit `.env` and update with your credentials:
+
+```env
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_gmail_app_password
+NOTIFICATION_EMAIL=your_email@gmail.com
+PORT=3000
 ```
 
 **To get a Gmail App Password:**
@@ -39,7 +41,9 @@ const NOTIFICATION_EMAIL = 'YOUR_EMAIL@gmail.com';  // Where to receive notifica
 2. Enable 2-Step Verification
 3. Go to Security → App Passwords
 4. Generate a new app password for "Mail"
-5. Use that password in the config
+5. Use that password in the `.env` file
+
+**⚠️ Security Note:** Never commit your `.env` file to Git. It's already in `.gitignore`.
 
 ### 3. Start the Server
 

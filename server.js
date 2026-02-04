@@ -1,10 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -13,12 +14,12 @@ app.use(express.static(__dirname));
 const EMAIL_CONFIG = {
     service: 'gmail',
     auth: {
-        user: 'nakhilkurian246@gmail.com',
-        pass: 'dhalbzehogxakffm'
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
     }
 };
 
-const NOTIFICATION_EMAIL = 'nakhilkurian246@gmail.com';
+const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL || process.env.EMAIL_USER;
 
 const transporter = nodemailer.createTransport(EMAIL_CONFIG);
 
