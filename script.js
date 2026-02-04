@@ -1,3 +1,10 @@
+// EmailJS Configuration
+const EMAILJS_CONFIG = {
+    serviceId: 'YOUR_SERVICE_ID',
+    templateId: 'YOUR_TEMPLATE_ID',
+    publicKey: 'YOUR_PUBLIC_KEY'
+};
+
 const questions = [
     "Will you be my Valentine?"
 ];
@@ -57,41 +64,51 @@ async function submitAllAnswers() {
         answer: responses[index].answer
     }));
     
-    const data = {
-        submitterName: userName,
-        submitterEmail: 'Not provided',
-        answers: allAnswers,
-        timestamp: new Date().toISOString()
+    // Format answers for email
+    const answersText = allAnswers.map(item => 
+        `Question ${item.questionNumber}: ${item.question}\nAnswer: ${item.answer.toUpperCase()}`
+    ).join('\n\n');
+    
+    const templateParams = {
+        submitter_name: userName,
+        timestamp: new Date().toLocaleString(),
+        answers: answersText,
+        answer_1: allAnswers[0]?.answer || 'N/A',
+        question_1: allAnswers[0]?.question || 'N/A'
     };
     
     try {
-        const apiUrl = window.location.hostname === 'localhost' 
-            ? 'http://localhost:3000/submit-survey'
-            : '/.netlify/functions/submit-survey';
+        // Initialize EmailJS (only needed once)
+        if (typeof emailjs !== 'undefined' && EMAILJS_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY') {
+            emailjs.init(EMAILJS_CONFIG.publicKey);
             
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        });
-        
-        if (response.ok) {
+            const response = await emailjs.send(
+                EMAILJS_CONFIG.serviceId,
+                EMAILJS_CONFIG.templateId,
+                templateParams
+            );
+            
+            console.log('Email sent successfully:', response);
             submitted = true;
             setTimeout(() => {
                 hideLoading();
                 showThankYou();
             }, 800);
         } else {
-            hideLoading();
-            console.error('Failed to send survey');
-            alert('Failed to submit survey. Please try again.');
+            // If EmailJS not configured, just show the thank you message
+            console.warn('EmailJS not configured. Skipping email notification.');
+            submitted = true;
+            setTimeout(() => {
+                hideLoading();
+                showThankYou();
+            }, 800);
         }
     } catch (error) {
         hideLoading();
-        console.error('Error sending survey:', error);
-        alert('Error submitting survey. Please try again.');
+        console.error('Error sending email:', error);
+        // Still show thank you message even if email fails
+        submitted = true;
+        showThankYou();
     }
 }
 
