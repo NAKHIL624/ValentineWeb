@@ -2,7 +2,7 @@
 const EMAILJS_CONFIG = {
     serviceId: 'service_30bsiaa',
     templateId: 'template_1zhuayo',
-    publicKey: 'mA9Weu__6vIF6NxgaigPC'
+    publicKey: 'h-INOgtIAD9T-cFDh'
 };
 
 const questions = [
