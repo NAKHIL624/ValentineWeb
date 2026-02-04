@@ -1,8 +1,8 @@
 // EmailJS Configuration
 const EMAILJS_CONFIG = {
-    serviceId: 'YOUR_SERVICE_ID',
-    templateId: 'YOUR_TEMPLATE_ID',
-    publicKey: 'YOUR_PUBLIC_KEY'
+    serviceId: 'service_30bsiaa',
+    templateId: 'template_1zhuayo',
+    publicKey: 'mA9Weu__6vIF6NxgaigPC'
 };
 
 const questions = [
