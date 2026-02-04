@@ -10,6 +10,7 @@ const questions = [
 ];
 
 const responses = {};
+let userName = '';
 
 function initializeQuestions() {
     const container = document.getElementById('questionsContainer');
@@ -54,8 +55,7 @@ function handleAnswer(questionIndex, answer, button) {
 }
 
 async function submitAllAnswers() {
-    const userNameInput = document.getElementById('userName');
-    const userName = userNameInput && userNameInput.value.trim() ? userNameInput.value.trim() : 'Anonymous';
+    const finalUserName = userName || 'Anonymous';
     
     showLoading();
     
@@ -71,7 +71,7 @@ async function submitAllAnswers() {
     ).join('\n\n');
     
     const templateParams = {
-        submitter_name: userName,
+        submitter_name: finalUserName,
         timestamp: new Date().toLocaleString(),
         answers: answersText,
         answer_1: allAnswers[0]?.answer || 'N/A',
@@ -150,4 +150,37 @@ if (window.history && window.history.pushState) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', initializeQuestions);
+function handleProceed() {
+    const nameInput = document.getElementById('userName');
+    const nameError = document.getElementById('nameError');
+    const userInfoSection = document.getElementById('userInfoSection');
+    const questionsContainer = document.getElementById('questionsContainer');
+    
+    const name = nameInput.value.trim();
+    
+    if (name === '') {
+        nameError.classList.remove('hidden');
+        nameInput.focus();
+        return;
+    }
+    
+    userName = name;
+    nameError.classList.add('hidden');
+    userInfoSection.classList.add('hidden');
+    questionsContainer.classList.remove('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    initializeQuestions();
+    
+    const proceedBtn = document.getElementById('proceedBtn');
+    const nameInput = document.getElementById('userName');
+    
+    proceedBtn.addEventListener('click', handleProceed);
+    
+    nameInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            handleProceed();
+        }
+    });
+});
