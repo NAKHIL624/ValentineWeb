@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Survey</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header id="surveyHeader">
+            <h1>💝 Valentine's Day 💝</h1>
+            <p class="subtitle">A special question for you...</p>
+        </header>
+
+        <div id="userInfoSection" class="user-info-section hidden">
+            <label for="userName">Your Name:</label>
+            <input type="text" id="userName" placeholder="Enter your name">
+        </div>
+
+        <div id="questionsContainer" class="questions-container">
+            <!-- Questions will be dynamically loaded here -->
+        </div>
+
+        <div id="loadingSpinner" class="loading-container hidden">
+            <div class="spinner"></div>
+            <p class="loading-text">Sending your answer with love... 💕</p>
+        </div>
+
+        <div id="yesMessage" class="response-message hidden">
+            <div class="hearts-container">
+                <div class="heart">❤️</div>
+                <div class="heart">❤️</div>
+                <div class="heart">❤️</div>
+                <div class="heart">❤️</div>
+                <div class="heart">❤️</div>
+                <div class="heart">❤️</div>
+            </div>
+            <h2 class="love-text">Love You! 💕</h2>
+            <p class="love-subtitle">You made my day! ❤️</p>
+        </div>
+
+        <div id="noMessage" class="response-message hidden">
+            <div class="allthebest-icon">🌟</div>
+            <h2>That's Okay! 💫</h2>
+            <p>I respect your decision and wish you all the happiness in the world. May you find someone who makes your heart smile! 🌸✨</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
