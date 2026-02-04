@@ -11,6 +11,7 @@ const questions = [
 
 const responses = {};
 let userName = '';
+let userEmail = '';
 
 function initializeQuestions() {
     const container = document.getElementById('questionsContainer');
@@ -72,6 +73,7 @@ async function submitAllAnswers() {
     
     const templateParams = {
         submitter_name: finalUserName,
+        submitter_email: userEmail || 'Not provided',
         timestamp: new Date().toLocaleString(),
         answers: answersText,
         answer_1: allAnswers[0]?.answer || 'N/A',
@@ -152,19 +154,35 @@ if (window.history && window.history.pushState) {
 
 function handleProceed() {
     const nameInput = document.getElementById('userName');
+    const emailInput = document.getElementById('userEmail');
     const nameError = document.getElementById('nameError');
     const userInfoSection = document.getElementById('userInfoSection');
     const questionsContainer = document.getElementById('questionsContainer');
     
     const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
     
-    if (name === '') {
+    if (name === '' || email === '') {
         nameError.classList.remove('hidden');
-        nameInput.focus();
+        if (name === '') {
+            nameInput.focus();
+        } else {
+            emailInput.focus();
+        }
+        return;
+    }
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        nameError.textContent = 'Please enter a valid email address';
+        nameError.classList.remove('hidden');
+        emailInput.focus();
         return;
     }
     
     userName = name;
+    userEmail = email;
     nameError.classList.add('hidden');
     userInfoSection.classList.add('hidden');
     questionsContainer.classList.remove('hidden');
