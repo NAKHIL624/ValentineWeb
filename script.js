@@ -13,6 +13,7 @@ const responses = {};
 let userName = '';
 let userEmail = '';
 let noButtonClickCount = 0;
+let isMessageShowing = false;
 
 const comicMessages = [
     "Wait! Before you say no... imagine all the beautiful moments we could share together! 🌹💕",
@@ -56,6 +57,11 @@ function initializeQuestions() {
 function handleAnswer(questionIndex, answer, button) {
     // If NO button clicked, show comic message and prevent action
     if (answer === 'no') {
+        // Prevent multiple messages at once
+        if (isMessageShowing) {
+            moveNoButton(button);
+            return;
+        }
         showComicMessage();
         moveNoButton(button);
         return;
@@ -87,13 +93,15 @@ function showComicMessage() {
     
     messageEl.textContent = message;
     messageEl.classList.remove('hidden');
+    isMessageShowing = true;
     
     noButtonClickCount++;
     
     // Show message for 10 seconds
     setTimeout(() => {
         messageEl.classList.add('hidden');
-    }, 1000);
+        isMessageShowing = false;
+    }, 10000);
 }
 
 function moveNoButton(button) {
