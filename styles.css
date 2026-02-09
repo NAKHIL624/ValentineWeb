@@ -21,11 +21,29 @@ body {
     max-width: 600px;
     width: 100%;
     padding: 40px;
+    animation: slideIn 0.6s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 header {
     text-align: center;
     margin-bottom: 40px;
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .user-info-section {
@@ -101,10 +119,48 @@ header {
     display: none;
 }
 
+.comic-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 20px 40px;
+    border-radius: 15px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    z-index: 1000;
+    animation: popIn 0.3s ease-out;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.comic-message.hidden {
+    display: none;
+}
+
 h1 {
     color: #333;
     font-size: 2.5rem;
     margin-bottom: 10px;
+    animation: bounce 1s ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 .subtitle {
@@ -127,6 +183,20 @@ h1 {
     border-radius: 12px;
     padding: 25px;
     transition: transform 0.2s, box-shadow 0.2s;
+    animation: scaleIn 0.5s ease-out;
+    position: relative;
+    min-height: 200px;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .question-card:hover {
@@ -167,6 +237,12 @@ h1 {
 .yes-btn:hover {
     background: #059669;
     transform: scale(1.05);
+    animation: pulse 0.6s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1.05); }
+    50% { transform: scale(1.1); }
 }
 
 .no-btn {
@@ -174,9 +250,20 @@ h1 {
     color: white;
 }
 
+.no-btn {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
 .no-btn:hover {
     background: #dc2626;
-    transform: scale(1.05);
+    animation: shake 0.3s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
 }
 
 .answer-btn:disabled {

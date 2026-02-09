@@ -12,6 +12,17 @@ const questions = [
 const responses = {};
 let userName = '';
 let userEmail = '';
+let noButtonClickCount = 0;
+
+const comicMessages = [
+    "Oops! The button moved! 😅",
+    "Nice try! But I'm faster! 🏃‍♂️",
+    "Come on, you know you want to say YES! 💕",
+    "The NO button is shy! 🙈",
+    "Maybe try the YES button instead? 😉",
+    "I believe in you! Click YES! ✨",
+    "The universe wants you to say YES! 🌟"
+];
 
 function initializeQuestions() {
     const container = document.getElementById('questionsContainer');
@@ -35,6 +46,13 @@ function initializeQuestions() {
 }
 
 function handleAnswer(questionIndex, answer, button) {
+    // If NO button clicked, show comic message and prevent action
+    if (answer === 'no') {
+        showComicMessage();
+        moveNoButton(button);
+        return;
+    }
+    
     const questionCard = button.closest('.question-card');
     const buttons = questionCard.querySelectorAll('.answer-btn');
     
@@ -53,6 +71,39 @@ function handleAnswer(questionIndex, answer, button) {
     if (Object.keys(responses).length === questions.length) {
         setTimeout(submitAllAnswers, 500);
     }
+}
+
+function showComicMessage() {
+    const messageEl = document.getElementById('comicMessage');
+    const message = comicMessages[noButtonClickCount % comicMessages.length];
+    
+    messageEl.textContent = message;
+    messageEl.classList.remove('hidden');
+    
+    noButtonClickCount++;
+    
+    setTimeout(() => {
+        messageEl.classList.add('hidden');
+    }, 2000);
+}
+
+function moveNoButton(button) {
+    const container = button.closest('.question-card');
+    const containerRect = container.getBoundingClientRect();
+    const buttonRect = button.getBoundingClientRect();
+    
+    // Calculate random position within container
+    const maxX = containerRect.width - buttonRect.width - 40;
+    const maxY = containerRect.height - buttonRect.height - 40;
+    
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+    
+    // Apply random position
+    button.style.position = 'absolute';
+    button.style.left = randomX + 'px';
+    button.style.top = randomY + 'px';
+    button.style.transition = 'all 0.3s ease';
 }
 
 async function submitAllAnswers() {
