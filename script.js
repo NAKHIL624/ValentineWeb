@@ -105,7 +105,7 @@ function showComicMessage() {
 }
 
 function moveNoButton(button) {
-    // Get current button position if it's already fixed
+    // Get current button position BEFORE any style changes
     const currentRect = button.getBoundingClientRect();
     
     // Get window dimensions
@@ -121,19 +121,26 @@ function moveNoButton(button) {
     
     // Ensure smooth transition by setting position first if not already fixed
     if (button.style.position !== 'fixed') {
+        // Set transition BEFORE changing position
+        button.style.transition = 'all 0.3s ease';
+        
+        // Change to fixed and set current position to prevent jump
         button.style.position = 'fixed';
         button.style.left = currentRect.left + 'px';
         button.style.top = currentRect.top + 'px';
         button.style.zIndex = '999';
-        button.style.transition = 'all 0.3s ease';
+        button.style.margin = '0'; // Remove any margin that might cause offset
         
-        // Force reflow to apply initial position
-        button.offsetHeight;
+        // Use setTimeout to ensure position is applied before moving
+        setTimeout(() => {
+            button.style.left = randomX + 'px';
+            button.style.top = randomY + 'px';
+        }, 10);
+    } else {
+        // Already fixed, just move to new position
+        button.style.left = randomX + 'px';
+        button.style.top = randomY + 'px';
     }
-    
-    // Now move to new position
-    button.style.left = randomX + 'px';
-    button.style.top = randomY + 'px';
 }
 
 async function submitAllAnswers() {
