@@ -93,7 +93,7 @@ function showComicMessage() {
     // Show message for 10 seconds
     setTimeout(() => {
         messageEl.classList.add('hidden');
-    }, 10000);
+    }, 1000);
 }
 
 function moveNoButton(button) {
