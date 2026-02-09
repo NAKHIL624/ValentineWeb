@@ -105,24 +105,35 @@ function showComicMessage() {
 }
 
 function moveNoButton(button) {
+    // Get current button position if it's already fixed
+    const currentRect = button.getBoundingClientRect();
+    
     // Get window dimensions
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
-    const buttonRect = button.getBoundingClientRect();
     
     // Calculate random position anywhere in the window
-    const maxX = windowWidth - buttonRect.width - 20;
-    const maxY = windowHeight - buttonRect.height - 20;
+    const maxX = windowWidth - currentRect.width - 20;
+    const maxY = windowHeight - currentRect.height - 20;
     
-    const randomX = Math.random() * maxX;
-    const randomY = Math.random() * maxY;
+    const randomX = Math.max(20, Math.random() * maxX);
+    const randomY = Math.max(20, Math.random() * maxY);
     
-    // Apply random position (fixed to window)
-    button.style.position = 'fixed';
+    // Ensure smooth transition by setting position first if not already fixed
+    if (button.style.position !== 'fixed') {
+        button.style.position = 'fixed';
+        button.style.left = currentRect.left + 'px';
+        button.style.top = currentRect.top + 'px';
+        button.style.zIndex = '999';
+        button.style.transition = 'all 0.3s ease';
+        
+        // Force reflow to apply initial position
+        button.offsetHeight;
+    }
+    
+    // Now move to new position
     button.style.left = randomX + 'px';
     button.style.top = randomY + 'px';
-    button.style.transition = 'all 0.3s ease';
-    button.style.zIndex = '999';
 }
 
 async function submitAllAnswers() {
