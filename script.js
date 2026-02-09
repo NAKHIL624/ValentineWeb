@@ -15,16 +15,21 @@ let userEmail = '';
 let noButtonClickCount = 0;
 
 const comicMessages = [
-    "Oops! The NO button is playing hide and seek! 😅 Can you catch it?",
-    "Whoa there! This button has a mind of its own! 🏃‍♂️ Maybe it's a sign?",
-    "Come on, deep down you know you want to say YES! 💕 Follow your heart!",
-    "The NO button is too shy to be clicked! 🙈 It believes you deserve happiness!",
-    "Plot twist: The NO button doesn't want to be clicked! 😉 Try the green one!",
-    "The universe is conspiring for you to say YES! ✨ Don't fight destiny!",
-    "Fun fact: 99% of people who tried clicking NO ended up clicking YES! 🌟",
-    "The NO button is on vacation! 🏖️ Only YES is available today!",
-    "Error 404: NO button not found! 🤖 Please try YES instead!",
-    "This button has trust issues! 💔 Show it some love by clicking YES!"
+    "Wait! Before you say no... imagine all the beautiful moments we could share together! 🌹💕",
+    "My heart skips a beat every time I see you. Please give us a chance? 💓✨",
+    "You're the reason I believe in love at first sight. Say YES? �💖",
+    "Life is too short to say NO to happiness! Let's create memories together! 🌟💞",
+    "I promise to make you smile every single day. Will you be mine? �💐",
+    "The stars aligned for us to meet. Don't let this moment slip away! ⭐💘",
+    "You make my world brighter just by existing. Please say YES! ☀️💝",
+    "I've been waiting for someone like you my whole life. Be my Valentine? 🌹💗",
+    "Every love story is beautiful, but ours could be my favorite! 💫💜",
+    "You're not just special, you're irreplaceable. Give me a chance? 💎💕",
+    "I promise to cherish every moment with you. Will you say YES? �💓",
+    "My heart chose you before my mind could. Please choose me too? 💖✨",
+    "You're the missing piece to my puzzle. Complete me by saying YES! 🧩💞",
+    "I'll be your biggest fan, your best friend, and your forever love! 🌟💘",
+    "Let's write our own fairy tale together. It starts with YES! 📖💗"
 ];
 
 function initializeQuestions() {
@@ -92,22 +97,24 @@ function showComicMessage() {
 }
 
 function moveNoButton(button) {
-    const container = button.closest('.question-card');
-    const containerRect = container.getBoundingClientRect();
+    // Get window dimensions
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
     const buttonRect = button.getBoundingClientRect();
     
-    // Calculate random position within container
-    const maxX = containerRect.width - buttonRect.width - 40;
-    const maxY = containerRect.height - buttonRect.height - 40;
+    // Calculate random position anywhere in the window
+    const maxX = windowWidth - buttonRect.width - 20;
+    const maxY = windowHeight - buttonRect.height - 20;
     
     const randomX = Math.random() * maxX;
     const randomY = Math.random() * maxY;
     
-    // Apply random position
-    button.style.position = 'absolute';
+    // Apply random position (fixed to window)
+    button.style.position = 'fixed';
     button.style.left = randomX + 'px';
     button.style.top = randomY + 'px';
     button.style.transition = 'all 0.3s ease';
+    button.style.zIndex = '999';
 }
 
 async function submitAllAnswers() {
