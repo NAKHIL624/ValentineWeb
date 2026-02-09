@@ -15,13 +15,16 @@ let userEmail = '';
 let noButtonClickCount = 0;
 
 const comicMessages = [
-    "Oops! The button moved! 😅",
-    "Nice try! But I'm faster! 🏃‍♂️",
-    "Come on, you know you want to say YES! 💕",
-    "The NO button is shy! 🙈",
-    "Maybe try the YES button instead? 😉",
-    "I believe in you! Click YES! ✨",
-    "The universe wants you to say YES! 🌟"
+    "Oops! The NO button is playing hide and seek! 😅 Can you catch it?",
+    "Whoa there! This button has a mind of its own! 🏃‍♂️ Maybe it's a sign?",
+    "Come on, deep down you know you want to say YES! 💕 Follow your heart!",
+    "The NO button is too shy to be clicked! 🙈 It believes you deserve happiness!",
+    "Plot twist: The NO button doesn't want to be clicked! 😉 Try the green one!",
+    "The universe is conspiring for you to say YES! ✨ Don't fight destiny!",
+    "Fun fact: 99% of people who tried clicking NO ended up clicking YES! 🌟",
+    "The NO button is on vacation! 🏖️ Only YES is available today!",
+    "Error 404: NO button not found! 🤖 Please try YES instead!",
+    "This button has trust issues! 💔 Show it some love by clicking YES!"
 ];
 
 function initializeQuestions() {
@@ -82,9 +85,10 @@ function showComicMessage() {
     
     noButtonClickCount++;
     
+    // Show message for 10 seconds
     setTimeout(() => {
         messageEl.classList.add('hidden');
-    }, 2000);
+    }, 10000);
 }
 
 function moveNoButton(button) {
