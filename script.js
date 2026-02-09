@@ -45,45 +45,68 @@ function initializeQuestions() {
                 <button class="answer-btn yes-btn" onclick="handleAnswer(${index}, 'yes', this)">
                     Yes
                 </button>
-                <button class="answer-btn no-btn" onclick="handleAnswer(${index}, 'no', this)">
+                <button class="answer-btn no-btn" id="noBtn${index}">
                     No
                 </button>
             </div>
         `;
         container.appendChild(questionCard);
+        
+        // Add hover event to NO button
+        setTimeout(() => {
+            const noBtn = document.getElementById(`noBtn${index}`);
+            if (noBtn) {
+                noBtn.addEventListener('mouseenter', function() {
+                    handleNoButtonHover(this);
+                });
+                noBtn.addEventListener('click', function() {
+                    handleNoButtonClick(this);
+                });
+            }
+        }, 100);
     });
 }
 
-function handleAnswer(questionIndex, answer, button) {
-    // If NO button clicked, show comic message and prevent action
-    if (answer === 'no') {
-        // Prevent multiple messages at once
-        if (isMessageShowing) {
-            moveNoButton(button);
-            return;
-        }
+function handleNoButtonHover(button) {
+    // Move button on hover
+    moveNoButton(button);
+    
+    // Show message if not already showing
+    if (!isMessageShowing) {
         showComicMessage();
-        moveNoButton(button);
-        return;
     }
+}
+
+function handleNoButtonClick(button) {
+    // Prevent click action, just show message
+    if (!isMessageShowing) {
+        showComicMessage();
+    }
+    moveNoButton(button);
+}
+
+function handleAnswer(questionIndex, answer, button) {
+    // Only handle YES button
+    if (answer === 'yes') {
     
-    const questionCard = button.closest('.question-card');
-    const buttons = questionCard.querySelectorAll('.answer-btn');
-    
-    buttons.forEach(btn => {
-        btn.classList.remove('selected');
-        btn.disabled = true;
-    });
-    
-    button.classList.add('selected');
-    
-    responses[questionIndex] = {
-        question: questions[questionIndex],
-        answer: answer
-    };
-    
-    if (Object.keys(responses).length === questions.length) {
-        setTimeout(submitAllAnswers, 500);
+        const questionCard = button.closest('.question-card');
+        const buttons = questionCard.querySelectorAll('.answer-btn');
+        
+        buttons.forEach(btn => {
+            btn.classList.remove('selected');
+            btn.disabled = true;
+        });
+        
+        button.classList.add('selected');
+        
+        responses[questionIndex] = {
+            question: questions[questionIndex],
+            answer: answer
+        };
+        
+        if (Object.keys(responses).length === questions.length) {
+            setTimeout(submitAllAnswers, 500);
+        }
     }
 }
 
